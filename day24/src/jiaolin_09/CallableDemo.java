@@ -1,0 +1,32 @@
+package jiaolin_09;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+/**
+ * @Auther: Joinlin
+ * @Descriptional: 多线程实现的方式3：
+ * A:创建一个线程池对象，控制要创建几个线程对象。
+ * public static ExecutorService newFixedThreadPool(int nThreads)
+ * B:这种线程池的线程可以执行：
+ * 可以执行Runnable对象或者Callable对象代表的线程
+ * 做一个类实现Runnable接口。
+ * C:调用如下方法即可
+ * Future<?> submit(Runnable task)
+ * <T> Future<T> submit(Callable<T> task)
+ * D:我就要结束，可以吗?
+ * 可以。
+ * @Date: Create in 15:49 2018/6/27
+ * @Modify By:
+ */
+public class CallableDemo {
+	public static void main(String[] args) {
+		//创建线程池
+		ExecutorService pool = Executors.newFixedThreadPool(2);
+		//执行线程
+		pool.submit(new MyCallable());
+		pool.submit(new MyCallable());
+		//进行关闭线程
+		pool.shutdown();
+	}
+}
