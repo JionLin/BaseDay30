@@ -1,5 +1,9 @@
 package com.jiaolin.generic;
 
+import org.testng.annotations.Test;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapters;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -54,6 +58,24 @@ public class PersonTest {
         // list.add(new Creature());
         // list.add(new Person3());
         // list.add(new Man());
+    }
+
+    // 赋值
+    @Test
+    public void test1() {
+        List<? extends Person3> list = null;
+        List<Person3> list1 = new ArrayList<>();
+        List<Man> list2 = new ArrayList<>();
+        List<Creature> list3 = new ArrayList<>();
+        list=list1;
+        list=list2;
+        // 赋值的情况下,<= 可以进行赋值
+        // list=list3;
+        // 如果是继承情况下,都不能添加。
+        // list.add(new Man());
+        // list.add(new Person3());
+        // list.add(new Creature());
+
     }
 
     public static void main(String[] args) {
