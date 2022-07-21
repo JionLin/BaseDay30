@@ -2,6 +2,7 @@ package com.jiaolin.stream;
 
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -51,4 +52,40 @@ public class StreamApiTest2 {
     //    skip(long n) 跳过
         employList.stream().skip(2).forEach(System.out::println);
     }
+
+    /**
+     map(Function f)
+     接收一个函数作为参数，该函数会被应用到每个元 素上，并将其映射成一个新的元素。
+     */
+    @Test
+    public void test2(){
+        // 获取名字
+        List<Employee> employList = EmployeeDate.getEmployList();
+
+        employList.stream().map(employee -> {
+            return employee.getName();
+        }).forEach(System.out::println);
+
+        System.out.println();
+        employList.stream().map(employee -> employee.getSalary()).forEach(System.out::println);
+    }
+
+    /**
+     sorted()
+     产生一个新流，其中按自然顺序排序
+     sorted(Comparator com)
+     产生一个新流，其中按比较器顺序排序
+     */
+    @Test
+    public void test3(){
+        // 进行排序
+        List<Integer> list = Arrays.asList(1, 2, 3, 4);
+        list.stream().sorted().forEach(System.out::println);
+
+        EmployeeDate.getEmployList().stream().sorted((e1,e2)->{
+            return e2.getAge()-e1.getAge();
+        }).forEach(System.out::println);
+    }
+
+
 }
