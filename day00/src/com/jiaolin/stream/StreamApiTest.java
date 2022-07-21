@@ -45,9 +45,9 @@ public class StreamApiTest {
 
     @Test
     public void  test2(){
-        Stream.generate(
-                ()-> 1
-        ).forEach(System.out::println);
+        Stream.generate(Math::random).limit(10).forEach(System.out::println);
 
+        System.out.println();
+        Stream.iterate(0,x->x+2).limit(10).forEach(System.out::println);
     }
 }
