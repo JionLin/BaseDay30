@@ -2,8 +2,8 @@ package com.jiaolin.stream;
 
 import org.testng.annotations.Test;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author johnny
@@ -59,10 +59,12 @@ public class StreamApiTest3 {
          * 返回流中最小值
          */
         Optional<Employee> employee = employList.stream().max(
-                (o1,o2)->{return o1.getAge()-o2.getAge();}
+                (o1, o2) -> {
+                    return o1.getAge() - o2.getAge();
+                }
         );
         System.out.println(employee);
-        Optional<Employee> employee2 = employList.stream().max((o1,o2)-> o2.getAge()-o1.getAge()
+        Optional<Employee> employee2 = employList.stream().max((o1, o2) -> o2.getAge() - o1.getAge()
         );
         System.out.println(employee2);
 
@@ -70,22 +72,40 @@ public class StreamApiTest3 {
     }
 
     /**
-     规约
-     reduce(T iden, BinaryOperator b)
-     可以将流中元素反复结合起来，得到一 个值。返回 T
-     reduce(BinaryOperator b)
-     可以将流中元素反复结合起来，得到一 个值。返回 Optional<T>
+     * 规约
+     * reduce(T iden, BinaryOperator b)
+     * 可以将流中元素反复结合起来，得到一 个值。返回 T
+     * reduce(BinaryOperator b)
+     * 可以将流中元素反复结合起来，得到一 个值。返回 Optional<T>
      */
     @Test
     public void test2() {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+
 
     }
 
     /**
-     收集
+     * 收集
+     * collect(Collector c)
+     * 将流转换为其他形式。接收一个 Collector 接口的实现，用于给Stream中元素做汇总 的方法
      */
     @Test
-    public void test3(){
+    public void test3() {
+        List<Employee> employList = EmployeeDate.getEmployList();
+        List<Employee> employeeList = employList.stream().limit(2).collect(Collectors.toList());
+        System.out.println(employeeList);
+
+        System.out.println();
+        Set<Employee> employees = employList.stream().limit(2).collect(Collectors.toSet());
+        System.out.println(employees);
+        System.out.println();
+
+        // 使用方法引用
+        ArrayList<Employee> arrayList = employList.stream().limit(2).collect(Collectors.toCollection(ArrayList::new));
+        System.out.println(arrayList);
+
+
 
     }
 
