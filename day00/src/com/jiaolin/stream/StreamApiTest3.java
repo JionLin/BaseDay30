@@ -72,15 +72,27 @@ public class StreamApiTest3 {
     }
 
     /**
-     * 规约
-     * reduce(T iden, BinaryOperator b)
+     * 规约 进行把所有的数求和
+     * reduce(T iden, BinaryOperator b) BinaryOperator 看继承的接口,入参和返回参数是如何的
      * 可以将流中元素反复结合起来，得到一 个值。返回 T
      * reduce(BinaryOperator b)
      * 可以将流中元素反复结合起来，得到一 个值。返回 Optional<T>
      */
     @Test
     public void test2() {
-        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        //     计算 0-10的总和
+        //    reduce(T iden, BinaryOperator b) iden 初始值 BinaryOperator 传递2个数,返回1个值  BiFunction<T,T,T>
+        //     Integer value = list.stream().reduce(0, Integer::sum);
+        Integer value = list.stream().reduce(0, (e1, e2) -> e1 + e2);
+        System.out.println(value);
+
+
+        // 计算员工的总工资
+        List<Employee> employList = EmployeeDate.getEmployList();
+        // Optional<Double> reduce = employList.stream().map(Employee::getSalary).reduce(Double::sum);
+        Optional<Double> reduce = employList.stream().map(Employee::getSalary).reduce((d1, d2) -> d1 + d2);
+        System.out.println(reduce);
 
 
     }
@@ -104,7 +116,6 @@ public class StreamApiTest3 {
         // 使用方法引用
         ArrayList<Employee> arrayList = employList.stream().limit(2).collect(Collectors.toCollection(ArrayList::new));
         System.out.println(arrayList);
-
 
 
     }
