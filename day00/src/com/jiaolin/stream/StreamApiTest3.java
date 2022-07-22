@@ -3,6 +3,7 @@ package com.jiaolin.stream;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author johnny
@@ -46,10 +47,34 @@ public class StreamApiTest3 {
         System.out.println(anyMatch);
 
 
+        // 返回流中元素
+        System.out.println();
+        long count = employList.stream().count();
+        System.out.println(count);
+
+        /**
+         * max(Comparator c)
+         * 返回流中最大值
+         * min(Comparator c)
+         * 返回流中最小值
+         */
+        Optional<Employee> employee = employList.stream().max(
+                (o1,o2)->{return o1.getAge()-o2.getAge();}
+        );
+        System.out.println(employee);
+        Optional<Employee> employee2 = employList.stream().max((o1,o2)-> o2.getAge()-o1.getAge()
+        );
+        System.out.println(employee2);
+
+
     }
 
     /**
      规约
+     reduce(T iden, BinaryOperator b)
+     可以将流中元素反复结合起来，得到一 个值。返回 T
+     reduce(BinaryOperator b)
+     可以将流中元素反复结合起来，得到一 个值。返回 Optional<T>
      */
     @Test
     public void test2() {
