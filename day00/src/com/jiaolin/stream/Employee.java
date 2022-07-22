@@ -26,6 +26,10 @@ public class Employee {
         this.salary = salary;
     }
 
+    public Employee(String name) {
+        this.name=name;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
