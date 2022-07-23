@@ -29,6 +29,7 @@ public class ReflectionApiTest1 {
         System.out.println(personClass2);
 
 
+        //第4种 使用类加载器进行加载类全限定名
         ClassLoader classLoader = ReflectionApiTest1.class.getClassLoader();
         Class<?> aClass = classLoader.loadClass("com.jiaolin.reflection.Person");
         System.out.println(aClass);
