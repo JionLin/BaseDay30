@@ -55,4 +55,6 @@ public class NewInstanceTest {
         return clazz.newInstance();
     }
 
+
+
 }
