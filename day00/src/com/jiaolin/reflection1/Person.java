@@ -25,7 +25,7 @@ public class Person extends Creature<String> implements Comparable<String>,MyInt
         this.name = name;
         this.age = age;
     }
-    @MyAnnotation
+    @MyAnnotation(value = "xxxx")
     private String show(String nation){
         System.out.println("我的国籍是：" + nation);
         return nation;
