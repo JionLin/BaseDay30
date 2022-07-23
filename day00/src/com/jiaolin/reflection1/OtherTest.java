@@ -2,9 +2,8 @@ package com.jiaolin.reflection1;
 
 import org.testng.annotations.Test;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.*;
 import java.nio.channels.Pipe;
 import java.time.Period;
 
@@ -17,7 +16,8 @@ import java.time.Period;
 public class OtherTest {
 
     /**
-     *  使用反射获取当前属性的值 并设置进去 进行输出
+     * 使用反射获取当前属性的值 并设置进去 进行输出
+     *
      * @throws Exception
      */
     @Test
@@ -28,7 +28,7 @@ public class OtherTest {
 
         // 获取指定的属性 必须就有一个class对象 为public
         Field id = clazz.getField("id");
-        id.set(o,100);
+        id.set(o, 100);
 
         Integer pid = (Integer) id.get(o);
         System.out.println(pid);
@@ -46,7 +46,7 @@ public class OtherTest {
         Person person = clazz.newInstance();
         Field name = clazz.getDeclaredField("name");
         name.setAccessible(true);
-        name.set(person,"cc");
+        name.set(person, "cc");
 
         System.out.println(name.get(person));
 
@@ -81,7 +81,7 @@ public class OtherTest {
 
     /**
      * 获取运行时的构造器
-     *
+     * <p>
      * 1. 获取指定的构造器
      * 2。进行设置可访问的权限
      * 3。使用构造器进行创建运行时对象的类
@@ -98,6 +98,98 @@ public class OtherTest {
         Person per = (Person) constructor.newInstance("xxx");
         System.out.println(per);
 
+    }
+
+    /**
+     * 获取构造器结构
+     */
+    @Test
+    public void test5() {
+        Class<Person> clazz = Person.class;
+        Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+        for (Constructor<?> constructor : constructors) {
+            System.out.println(constructor);
+        }
+    }
+
+
+    /**
+     * 获取运行时类的父类
+     */
+    @Test
+    public void test6() {
+        Class<Person> personClass = Person.class;
+
+        Class<? super Person> superclass = personClass.getSuperclass();
+        System.out.println(superclass);
+    }
+
+    /**
+     * 获取运行时类的带泛型的父类
+     */
+    @Test
+    public void test7() {
+        Class<Person> personClass = Person.class;
+        System.out.println(personClass.getGenericSuperclass());
 
     }
+
+    /**
+     * 获取运行时类的带泛型的父类的泛型
+     */
+    @Test
+    public void test8() {
+        Class<Person> personClass = Person.class;
+        Type genericSuperclass = personClass.getGenericSuperclass();
+
+        ParameterizedType parameterizedType = (ParameterizedType) genericSuperclass;
+        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+        System.out.println(actualTypeArguments[0].getTypeName());
+    }
+
+    /**
+     * 获取运行时类实现的接口
+     */
+    @Test
+    public void test9() {
+        Class<Person> clazz = Person.class;
+        Class<?>[] interfaces = clazz.getInterfaces();
+        for (Class<?> anInterface : interfaces) {
+            System.out.println(anInterface);
+        }
+        System.out.println();
+        // 父类实现的接口
+
+        Class<?>[] interfaces1 = clazz.getSuperclass().getInterfaces();
+        for (Class<?> aClass : interfaces1) {
+            System.out.println(aClass);
+        }
+
+    }
+
+    /**
+     * 获取运行时类所在的包
+     */
+    @Test
+    public void test10() {
+
+        Class<Person> personClass = Person.class;
+        Package aPackage = personClass.getPackage();
+        System.out.println(aPackage);
+    }
+
+
+    /**
+     * 获取运行时类所声明的注解
+     */
+    @Test
+    public void test11() {
+        Class<Person> personClass = Person.class;
+        Annotation[] annotations = personClass.getDeclaredAnnotations();
+        for (Annotation annotation : annotations) {
+            System.out.println(annotation);
+        }
+    }
+
+
 }
