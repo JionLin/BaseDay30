@@ -110,14 +110,83 @@ public class LambdaApiTest2 {
 
         System.out.println();
         List<Employee> employList6 = EmployeeDate.getEmployList();
-        Map<Integer,String> collect6 = employList6.stream().collect(Collectors.toMap
-                (f-> f.getAge(),employee -> employee.getName() + employee.getAge()));
+        Map<Integer, String> collect6 = employList6.stream().collect(Collectors.toMap
+                (f -> f.getAge(), employee -> employee.getName() + employee.getAge()));
 
+        //18 : 刘强东18
+        // 35 : 巴菲特。x35
+        // 22 : 马云22
+        // 23 : 小菜菜23
+        // 25 : johnny25
         for (Map.Entry<Integer, String> map : collect6.entrySet()) {
             System.out.println(map.getKey() + " : " + map.getValue());
         }
+    }
 
 
+    /**
+     * @return void
+     * @Author johnny
+     * @Description
+     * * Collectors.joining() 连接流中每个字符串
+     * @Date 10:38 2022/9/21
+     * @Param []
+     **/
+    @Test
+    public void testJoining() {
+        List<Employee> list = EmployeeDate.getEmployList();
+        String collect = list.stream().map(Employee::getName).collect(Collectors.joining());
+        System.out.println(collect);
+        System.out.println();
+
+        List<Employee> list2 = EmployeeDate.getEmployList();
+        String s = list2.stream().map(Employee::getName).collect(Collectors.joining(","));
+        //刘强东,小菜菜,马云,巴菲特。x,johnny
+        System.out.println(s);
+        System.out.println();
+    }
+
+
+    /**
+     * @return void
+     * @Author johnny
+     * @Description 根据某属性 对值进行分组,返回对是一个map,属性为key  value就是一个list
+     * @Date 11:03 2022/9/21
+     * @Param []
+     **/
+    @Test
+    public void testGroupBy() {
+        List<Employee> list = EmployeeDate.getEmployList();
+        Map<String, List<Employee>> collect = list.stream().collect(Collectors.groupingBy(employee ->
+                employee.getName() + employee.getAge()
+        ));
+        for (Map.Entry<String, List<Employee>> entry : collect.entrySet()) {
+            System.out.println(entry.getKey() + ":" + entry.getValue());
+        }
+        System.out.println();
+        List<Employee> list2 = EmployeeDate.getEmployList();
+        Map<String, List<Employee>> collect2 = list2.stream().collect(
+                Collectors.groupingBy(Employee::getName));
+        /**
+
+         小菜菜:[Employee{id=2, age=23, name='小菜菜', salary=18000.88}]
+         马云:[Employee{id=1, age=22, name='马云', salary=20000.03}]
+         巴菲特。x:[Employee{id=1, age=35, name='巴菲特。x', salary=3000.03}]
+         johnny:[Employee{id=1, age=25, name='johnny', salary=8800.03}, Employee{id=2, age=18, name='johnny', salary=8800.03}]
+         刘强东:[Employee{id=1, age=18, name='刘强东', salary=6000.03}]
+         */
+        for (Map.Entry<String, List<Employee>> entry : collect2.entrySet()) {
+            System.out.println(entry.getKey() + ":" + entry.getValue());
+        }
+
+        System.out.println();
+        List<Employee> list3 = EmployeeDate.getEmployList();
+        Map<Integer, List<Employee>> collect3 = list3.stream().collect(
+                Collectors.groupingBy(Employee::getId));
+
+        for (Map.Entry<Integer, List<Employee>> entry : collect3.entrySet()) {
+            System.out.println(entry.getKey() + ":" + entry.getValue());
+        }
 
 
     }

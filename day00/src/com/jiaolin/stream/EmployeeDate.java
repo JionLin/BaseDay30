@@ -17,6 +17,7 @@ public class EmployeeDate {
         list.add(new Employee(1,22,"马云",20000.03));
         list.add(new Employee(1,35,"巴菲特。x",3000.03));
         list.add(new Employee(1,25,"johnny",8800.03));
+        list.add(new Employee(2,18,"johnny",8800.03));
         return list;
     }
 }
